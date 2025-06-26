@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -473,6 +474,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
+            z-index: 1000;
         }
 
         .user-info {
@@ -497,24 +499,24 @@
             .header h1 {
                 font-size: 2rem;
             }
-            
+
             .restaurants-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .filters-row {
                 grid-template-columns: 1fr;
             }
-            
+
             .auth-section {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .sort-section {
                 justify-content: center;
             }
-            
+
             .user-status {
                 position: relative;
                 top: auto;
@@ -540,8 +542,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .favorite-btn {
@@ -636,12 +643,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <h1>🍽️ Providencia Restaurants</h1>
+            <h1>🍽️ Providencia Sabores</h1>
             <p>Descubre los mejores restaurantes de Providencia, Santiago</p>
-            
+
             <div class="auth-section">
                 <button class="auth-btn login" onclick="showLogin()">Iniciar Sesión</button>
                 <button class="auth-btn register" onclick="showRegister()">Registrarse</button>
@@ -653,20 +661,30 @@
                 <div class="user-avatar" id="userAvatar">U</div>
                 <div>
                     <div id="userName">Usuario</div>
-                    <button onclick="logout()" style="background: none; border: none; color: #667eea; cursor: pointer; font-size: 0.9rem;">Cerrar Sesión</button>
+                    <button onclick="logout()"
+                        style="background: none; border: none; color: #667eea; cursor: pointer; font-size: 0.9rem;">Cerrar
+                        Sesión</button>
                 </div>
             </div>
         </div>
 
         <div class="search-filters">
             <div class="search-bar">
-                <input type="text" class="search-input" id="searchInput" placeholder="Buscar restaurantes por nombre o palabra clave...">
+                <input type="text" class="search-input" id="searchInput"
+                    placeholder="Buscar restaurantes por nombre o palabra clave...">
                 <span class="search-icon">🔍</span>
                 <div class="autocomplete-results" id="autocompleteResults"></div>
             </div>
-            
+
             <div class="filters-row">
                 <div class="filter-group">
+                    <div class="filter-group">
+                        <label class="filter-label">Mostrar solo</label>
+                        <select class="filter-select" id="favoritesFilter">
+                            <option value="">Todos los restaurantes</option>
+                            <option value="favorites">Solo favoritos</option>
+                        </select>
+                    </div>
                     <label class="filter-label">Calificación mínima</label>
                     <select class="filter-select" id="ratingFilter">
                         <option value="">Todas las calificaciones</option>
@@ -676,23 +694,22 @@
                         <option value="1">1+ estrella</option>
                     </select>
                 </div>
-                
+
                 <div class="filter-group">
                     <label class="filter-label">Tipo de cocina</label>
                     <select class="filter-select" id="cuisineFilter">
                         <option value="">Todos los tipos</option>
-                        <option value="chilena">Chilena</option>
-                        <option value="italiana">Italiana</option>
-                        <option value="vegetariana">Vegetariana</option>
-                        <option value="fast-food">Fast Food</option>
-                        <option value="japonesa">Japonesa</option>
-                        <option value="mexicana">Mexicana</option>
-                        <option value="peruana">Peruana</option>
-                        <option value="francesa">Francesa</option>
+                        <option value="comida-rapida">Comida rápida</option>
+                        <option value="sopas-caldos">Sopas y caldos</option>
+                        <option value="mariscos">Mariscos</option>
+                        <option value="platos-tradicionales">Platos tradicionales</option>
+                        <option value="dulces">Dulces típicos</option>
                     </select>
+
+
                 </div>
             </div>
-            
+
             <div class="sort-section">
                 <button class="sort-btn active" onclick="sortRestaurants('rating')">Mejor Calificados</button>
                 <button class="sort-btn" onclick="sortRestaurants('newest')">Más Nuevos</button>
@@ -723,14 +740,18 @@
             <h2 style="margin-bottom: 20px; text-align: center;">Iniciar Sesión</h2>
             <form onsubmit="handleLogin(event)">
                 <div style="margin-bottom: 15px;">
-                    <input type="email" placeholder="Correo electrónico" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
+                    <input type="email" placeholder="Correo electrónico" required
+                        style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <input type="password" placeholder="Contraseña" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
+                    <input type="password" placeholder="Contraseña" required
+                        style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
                 </div>
-                <button type="submit" class="auth-btn login" style="width: 100%; margin-bottom: 10px;">Iniciar Sesión</button>
+                <button type="submit" class="auth-btn login" style="width: 100%; margin-bottom: 10px;">Iniciar
+                    Sesión</button>
             </form>
-            <p style="text-align: center; color: #666;">¿No tienes cuenta? <a href="#" onclick="showRegister()" style="color: #667eea;">Regístrate aquí</a></p>
+            <p style="text-align: center; color: #666;">¿No tienes cuenta? <a href="#" onclick="showRegister()"
+                    style="color: #667eea;">Regístrate aquí</a></p>
         </div>
     </div>
 
@@ -741,31 +762,181 @@
             <h2 style="margin-bottom: 20px; text-align: center;">Registrarse</h2>
             <form onsubmit="handleRegister(event)">
                 <div style="margin-bottom: 15px;">
-                    <input type="text" placeholder="Nombre completo" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
+                    <input type="text" placeholder="Nombre completo" required
+                        style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <input type="email" placeholder="Correo electrónico" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
+                    <input type="email" placeholder="Correo electrónico" required
+                        style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <input type="password" placeholder="Contraseña" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
+                    <input type="password" placeholder="Contraseña" required
+                        style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px;">
                 </div>
-                <button type="submit" class="auth-btn register" style="width: 100%; margin-bottom: 10px;">Registrarse</button>
+                <button type="submit" class="auth-btn register"
+                    style="width: 100%; margin-bottom: 10px;">Registrarse</button>
             </form>
-            <p style="text-align: center; color: #666;">¿Ya tienes cuenta? <a href="#" onclick="showLogin()" style="color: #667eea;">Inicia sesión aquí</a></p>
+            <p style="text-align: center; color: #666;">¿Ya tienes cuenta? <a href="#" onclick="showLogin()"
+                    style="color: #667eea;">Inicia sesión aquí</a></p>
         </div>
     </div>
 
     <script>
         // Datos simulados de restaurantes
         let restaurants = [
+            // COMIDA RÁPIDA
             {
                 id: 1,
+                name: "Sabor Express",
+                cuisine: "comida-rapida",
+                description: "Comida rápida chilena con empanadas, completos y sopaipillas caseras.",
+                rating: 4.2,
+                reviews: 120,
+                address: "Av. Nueva Providencia 456, Providencia, Santiago",
+                phone: "+56 2 2345 6789",
+                email: "contacto@saborexpress.cl",
+                schedule: {
+                    "Lunes": "11:00 - 22:00",
+                    "Martes": "11:00 - 22:00",
+                    "Miércoles": "11:00 - 22:00",
+                    "Jueves": "11:00 - 22:00",
+                    "Viernes": "11:00 - 23:00",
+                    "Sábado": "11:00 - 23:00",
+                    "Domingo": "12:00 - 21:00"
+                },
+                coordinates: [-33.4265, -70.6201],
+                dateAdded: "2024-03-05",
+                visits: 1430
+            },
+            {
+                id: 2,
+                name: "La Picá Rápida",
+                cuisine: "comida-rapida",
+                description: "Platos rápidos y contundentes: chorrillana, completos, papas fritas caseras.",
+                rating: 4.1,
+                reviews: 95,
+                address: "Av. Manuel Montt 101, Providencia, Santiago",
+                phone: "+56 2 2890 1122",
+                email: "contacto@lapicarapida.cl",
+                schedule: {
+                    "Lunes": "12:00 - 22:00",
+                    "Martes": "12:00 - 22:00",
+                    "Miércoles": "12:00 - 22:00",
+                    "Jueves": "12:00 - 23:00",
+                    "Viernes": "12:00 - 23:30",
+                    "Sábado": "12:00 - 23:30",
+                    "Domingo": "12:00 - 21:00"
+                },
+                coordinates: [-33.4287, -70.6189],
+                dateAdded: "2024-04-01",
+                visits: 870
+            },
+
+            // SOPAS Y CALDOS
+            {
+                id: 3,
+                name: "Caldos Don Pedro",
+                cuisine: "sopas-caldos",
+                description: "Especialistas en cazuela, carbonada y caldillo de congrio al estilo tradicional.",
+                rating: 4.6,
+                reviews: 98,
+                address: "Av. Manuel Montt 789, Providencia, Santiago",
+                phone: "+56 2 2567 8910",
+                email: "info@caldosdonpedro.cl",
+                schedule: {
+                    "Lunes": "Cerrado",
+                    "Martes": "12:00 - 21:00",
+                    "Miércoles": "12:00 - 21:00",
+                    "Jueves": "12:00 - 21:00",
+                    "Viernes": "12:00 - 22:00",
+                    "Sábado": "12:00 - 22:00",
+                    "Domingo": "12:00 - 20:00"
+                },
+                coordinates: [-33.4315, -70.6170],
+                dateAdded: "2024-03-10",
+                visits: 990
+            },
+            {
+                id: 4,
+                name: "El Caldero Criollo",
+                cuisine: "sopas-caldos",
+                description: "Gran variedad de sopas y caldos: pantrucas, cazuela de vacuno y sopaipillas pasadas.",
+                rating: 4.4,
+                reviews: 105,
+                address: "Av. Providencia 1420, Providencia, Santiago",
+                phone: "+56 2 2789 3456",
+                email: "info@calderocriollo.cl",
+                schedule: {
+                    "Lunes": "12:00 - 21:00",
+                    "Martes": "12:00 - 21:00",
+                    "Miércoles": "12:00 - 21:00",
+                    "Jueves": "12:00 - 21:00",
+                    "Viernes": "12:00 - 22:00",
+                    "Sábado": "12:00 - 22:00",
+                    "Domingo": "12:00 - 20:00"
+                },
+                coordinates: [-33.4350, -70.6270],
+                dateAdded: "2024-04-03",
+                visits: 760
+            },
+
+            // MARISCOS
+            {
+                id: 5,
+                name: "Del Mar Chilote",
+                cuisine: "mariscos",
+                description: "Mariscos del sur con platos como curanto, paila marina y machas a la parmesana.",
+                rating: 4.7,
+                reviews: 110,
+                address: "Av. Ricardo Lyon 321, Providencia, Santiago",
+                phone: "+56 2 2987 4567",
+                email: "reservas@delmarchilote.cl",
+                schedule: {
+                    "Lunes": "12:00 - 21:00",
+                    "Martes": "12:00 - 21:00",
+                    "Miércoles": "12:00 - 21:00",
+                    "Jueves": "12:00 - 22:00",
+                    "Viernes": "12:00 - 23:00",
+                    "Sábado": "12:00 - 23:00",
+                    "Domingo": "12:00 - 21:00"
+                },
+                coordinates: [-33.4320, -70.6093],
+                dateAdded: "2024-03-12",
+                visits: 1800
+            },
+            {
+                id: 6,
+                name: "Sabores del Mar",
+                cuisine: "mariscos",
+                description: "Ceviches chilenos, mariscales, almejas al vino blanco y empanadas de camarón-queso.",
+                rating: 4.5,
+                reviews: 140,
+                address: "Av. Los Leones 950, Providencia, Santiago",
+                phone: "+56 2 2880 5566",
+                email: "contacto@saboresdelmar.cl",
+                schedule: {
+                    "Lunes": "12:00 - 22:00",
+                    "Martes": "12:00 - 22:00",
+                    "Miércoles": "12:00 - 22:00",
+                    "Jueves": "12:00 - 22:00",
+                    "Viernes": "12:00 - 23:00",
+                    "Sábado": "12:00 - 23:00",
+                    "Domingo": "12:00 - 21:00"
+                },
+                coordinates: [-33.4285, -70.6145],
+                dateAdded: "2024-04-06",
+                visits: 1250
+            },
+
+            // PLATOS TRADICIONALES
+            {
+                id: 7,
                 name: "La Mesa del Chef",
-                cuisine: "chilena",
-                description: "Auténtica cocina chilena con ingredientes locales y preparaciones tradicionales renovadas.",
+                cuisine: "platos-tradicionales",
+                description: "Cocina chilena con pastel de choclo, porotos granados y charquicán.",
                 rating: 4.8,
                 reviews: 156,
-                address: "Av. Providencia 1234, Providencia",
+                address: "Av. Providencia 1234, Providencia, Santiago",
                 phone: "+56 2 2234 5678",
                 email: "contacto@lamesadelchef.cl",
                 schedule: {
@@ -782,75 +953,79 @@
                 visits: 2100
             },
             {
-                id: 6,
-                name: "Cantina Mexicana",
-                cuisine: "mexicana",
-                description: "Auténticos sabores mexicanos con tacos, quesadillas y margaritas tradicionales.",
-                rating: 4.4,
-                reviews: 167,
-                address: "Av. Providencia 3456, Providencia",
-                phone: "+56 2 2789 0123",
-                email: "info@cantinamexicana.cl",
-                schedule: {
-                    "Lunes": "18:00 - 23:00",
-                    "Martes": "18:00 - 23:00",
-                    "Miércoles": "18:00 - 23:00",
-                    "Jueves": "18:00 - 23:00",
-                    "Viernes": "18:00 - 24:00",
-                    "Sábado": "18:00 - 24:00",
-                    "Domingo": "18:00 - 22:00"
-                },
-                coordinates: [-33.4390, -70.6530],
-                dateAdded: "2024-03-15",
-                visits: 1567
-            },
-            {
-                id: 7,
-                name: "Lima Fusion",
-                cuisine: "peruana",
-                description: "Cocina peruana contemporánea con ceviches frescos y platos tradicionales reinventados.",
-                rating: 4.8,
-                reviews: 134,
-                address: "Av. Manuel Montt 789, Providencia",
-                phone: "+56 2 2890 1234",
-                email: "reservas@limafusion.cl",
-                schedule: {
-                    "Lunes": "Cerrado",
-                    "Martes": "12:00 - 22:00",
-                    "Miércoles": "12:00 - 22:00",
-                    "Jueves": "12:00 - 22:00",
-                    "Viernes": "12:00 - 23:00",
-                    "Sábado": "12:00 - 23:00",
-                    "Domingo": "12:00 - 21:00"
-                },
-                coordinates: [-33.4355, -70.6485],
-                dateAdded: "2024-04-02",
-                visits: 1890
-            },
-            {
                 id: 8,
-                name: "Bistro Français",
-                cuisine: "francesa",
-                description: "Elegante bistro francés con cocina refinada y una selecta carta de vinos.",
-                rating: 4.9,
-                reviews: 89,
-                address: "Av. Ricardo Lyon 567, Providencia",
-                phone: "+56 2 2901 2345",
-                email: "contact@bistrofrancais.cl",
+                name: "Rincón de la Abuela",
+                cuisine: "platos-tradicionales",
+                description: "Recetas tradicionales con ingredientes de campo: humitas, charquicán y cazuela de ave.",
+                rating: 4.3,
+                reviews: 112,
+                address: "Av. Nueva Providencia 1030, Providencia, Santiago",
+                phone: "+56 2 2900 9988",
+                email: "rincon@laabuela.cl",
                 schedule: {
-                    "Lunes": "Cerrado",
-                    "Martes": "Cerrado",
-                    "Miércoles": "19:00 - 23:00",
-                    "Jueves": "19:00 - 23:00",
-                    "Viernes": "19:00 - 24:00",
-                    "Sábado": "19:00 - 24:00",
-                    "Domingo": "19:00 - 22:00"
+                    "Lunes": "12:00 - 21:00",
+                    "Martes": "12:00 - 21:00",
+                    "Miércoles": "12:00 - 21:00",
+                    "Jueves": "12:00 - 22:00",
+                    "Viernes": "12:00 - 22:00",
+                    "Sábado": "12:00 - 22:00",
+                    "Domingo": "12:00 - 20:00"
                 },
-                coordinates: [-33.4365, -70.6495],
+                coordinates: [-33.4333, -70.6202],
+                dateAdded: "2024-04-09",
+                visits: 1010
+            },
+
+            // DULCES
+            {
+                id: 9,
+                name: "Dulce Patria",
+                cuisine: "dulces",
+                description: "Postres tradicionales chilenos como mote con huesillo, calzones rotos y leche asada.",
+                rating: 4.5,
+                reviews: 145,
+                address: "Av. Los Leones 789, Providencia, Santiago",
+                phone: "+56 2 2123 4567",
+                email: "contacto@dulcepatria.cl",
+                schedule: {
+                    "Lunes": "10:00 - 20:00",
+                    "Martes": "10:00 - 20:00",
+                    "Miércoles": "10:00 - 20:00",
+                    "Jueves": "10:00 - 20:00",
+                    "Viernes": "10:00 - 21:00",
+                    "Sábado": "11:00 - 21:00",
+                    "Domingo": "11:00 - 20:00"
+                },
+                coordinates: [-33.4308, -70.6155],
+                dateAdded: "2024-03-20",
+                visits: 1325
+            },
+            {
+                id: 10,
+                name: "Dulcería El Recuerdo",
+                cuisine: "dulces",
+                description: "Tortas de mil hojas, empolvados, alfajores y mote con huesillo helado.",
+                rating: 4.6,
+                reviews: 160,
+                address: "Av. Pedro de Valdivia 150, Providencia, Santiago",
+                phone: "+56 2 2100 7788",
+                email: "info@dulceriarecuerdo.cl",
+                schedule: {
+                    "Lunes": "10:00 - 20:00",
+                    "Martes": "10:00 - 20:00",
+                    "Miércoles": "10:00 - 20:00",
+                    "Jueves": "10:00 - 20:00",
+                    "Viernes": "10:00 - 21:00",
+                    "Sábado": "11:00 - 21:00",
+                    "Domingo": "11:00 - 20:00"
+                },
+                coordinates: [-33.4317, -70.6162],
                 dateAdded: "2024-04-10",
-                visits: 987
+                visits: 1490
             }
         ];
+
+
 
         // Estado de la aplicación
         let currentUser = null;
@@ -860,7 +1035,7 @@
         let restaurantReviews = {};
 
         // Inicializar la aplicación
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             renderRestaurants();
             setupEventListeners();
             checkUserSession();
@@ -876,9 +1051,10 @@
             // Filtros
             document.getElementById('ratingFilter').addEventListener('change', applyFilters);
             document.getElementById('cuisineFilter').addEventListener('change', applyFilters);
+            document.getElementById('favoritesFilter').addEventListener('change', applyFilters)
 
             // Cerrar modal al hacer clic fuera
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (e.target.classList.contains('modal')) {
                     closeModal();
                 }
@@ -896,36 +1072,36 @@
 
         function handleSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            
+
             if (query.length > 0) {
-                const suggestions = restaurants.filter(r => 
-                    r.name.toLowerCase().includes(query) || 
+                const suggestions = restaurants.filter(r =>
+                    r.name.toLowerCase().includes(query) ||
                     r.description.toLowerCase().includes(query) ||
                     r.cuisine.toLowerCase().includes(query)
                 ).slice(0, 5);
-                
+
                 showAutocompleteResults(suggestions);
             } else {
                 hideAutocomplete();
             }
-            
+
             applyFilters();
         }
 
         function showAutocompleteResults(suggestions) {
             const resultsContainer = document.getElementById('autocompleteResults');
-            
+
             if (suggestions.length === 0) {
                 hideAutocomplete();
                 return;
             }
-            
-            resultsContainer.innerHTML = suggestions.map(restaurant => 
+
+            resultsContainer.innerHTML = suggestions.map(restaurant =>
                 `<div class="autocomplete-item" onclick="selectRestaurant('${restaurant.name}')">
                     <strong>${restaurant.name}</strong> - ${restaurant.cuisine}
                 </div>`
             ).join('');
-            
+
             resultsContainer.style.display = 'block';
         }
 
@@ -952,17 +1128,19 @@
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             const ratingFilter = document.getElementById('ratingFilter').value;
             const cuisineFilter = document.getElementById('cuisineFilter').value;
+            const favoritesFilter = document.getElementById('favoritesFilter').value;
 
             filteredRestaurants = restaurants.filter(restaurant => {
-                const matchesSearch = !searchQuery || 
+                const matchesSearch = !searchQuery ||
                     restaurant.name.toLowerCase().includes(searchQuery) ||
                     restaurant.description.toLowerCase().includes(searchQuery) ||
                     restaurant.cuisine.toLowerCase().includes(searchQuery);
-                
+
                 const matchesRating = !ratingFilter || restaurant.rating >= parseFloat(ratingFilter);
                 const matchesCuisine = !cuisineFilter || restaurant.cuisine === cuisineFilter;
-
-                return matchesSearch && matchesRating && matchesCuisine;
+                const matchesFavorites = !favoritesFilter || (favoritesFilter === 'favorites' && favorites.includes(restaurant.id));
+                
+                return matchesSearch && matchesRating && matchesCuisine && matchesFavorites;
             });
 
             sortRestaurants(currentSort);
@@ -970,7 +1148,7 @@
 
         function sortRestaurants(sortBy) {
             currentSort = sortBy;
-            
+
             // Actualizar botones de ordenamiento
             document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
             event?.target?.classList.add('active');
@@ -992,7 +1170,7 @@
 
         function renderRestaurants() {
             const grid = document.getElementById('restaurantsGrid');
-            
+
             if (filteredRestaurants.length === 0) {
                 grid.innerHTML = `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
@@ -1035,26 +1213,26 @@
             const fullStars = Math.floor(rating);
             const hasHalfStar = rating % 1 >= 0.5;
             let stars = '';
-            
+
             for (let i = 0; i < fullStars; i++) {
                 stars += '<span class="star">★</span>';
             }
-            
+
             if (hasHalfStar) {
                 stars += '<span class="star">★</span>';
             }
-            
+
             const emptyStars = 5 - Math.ceil(rating);
             for (let i = 0; i < emptyStars; i++) {
                 stars += '<span class="star empty">★</span>';
             }
-            
+
             return stars;
         }
 
         function toggleFavorite(event, restaurantId) {
             event.stopPropagation();
-            
+
             if (!currentUser) {
                 alert('Debes iniciar sesión para guardar favoritos');
                 return;
@@ -1066,7 +1244,7 @@
             } else {
                 favorites.push(restaurantId);
             }
-            
+
             renderRestaurants();
         }
 
@@ -1076,7 +1254,7 @@
 
             const modal = document.getElementById('restaurantModal');
             const details = document.getElementById('restaurantDetails');
-            
+
             details.innerHTML = `
                 <div class="restaurant-details">
                     <h2>${restaurant.name}</h2>
@@ -1115,7 +1293,7 @@
                             <div class="review-form">
                                 <h4>Deja tu opinión</h4>
                                 <div class="rating-input" id="ratingInput">
-                                    ${[1,2,3,4,5].map(i => `<span class="rating-star" onclick="selectRating(${i})">★</span>`).join('')}
+                                    ${[1, 2, 3, 4, 5].map(i => `<span class="rating-star" onclick="selectRating(${i})">★</span>`).join('')}
                                 </div>
                                 <textarea class="review-textarea" id="reviewText" placeholder="Comparte tu experiencia..."></textarea>
                                 <button class="action-btn primary" onclick="submitReview(${restaurant.id})">Enviar Opinión</button>
@@ -1133,9 +1311,9 @@
                     </div>
                 </div>
             `;
-            
+
             modal.classList.add('active');
-            
+
             // Inicializar mapa
             setTimeout(() => {
                 initMap(restaurant.coordinates, restaurant.name, restaurant.address);
@@ -1147,11 +1325,11 @@
             if (!mapContainer) return;
 
             const map = L.map('mapContainer').setView(coordinates, 16);
-            
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
-            
+
             L.marker(coordinates)
                 .addTo(map)
                 .bindPopup(`<b>${name}</b><br>${address}`)
@@ -1215,14 +1393,14 @@
 
             // Actualizar vista de reviews
             document.getElementById('reviewsList').innerHTML = renderReviews(restaurantId);
-            
+
             alert('¡Gracias por tu opinión!');
         }
 
         function updateRestaurantRating(restaurantId) {
             const restaurant = restaurants.find(r => r.id === restaurantId);
             const reviews = restaurantReviews[restaurantId] || [];
-            
+
             if (reviews.length > 0) {
                 const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
                 const avgRating = totalRating / reviews.length;
@@ -1233,7 +1411,7 @@
 
         function renderReviews(restaurantId) {
             const reviews = restaurantReviews[restaurantId] || [];
-            
+
             if (reviews.length === 0) {
                 return '<p style="text-align: center; color: #666; padding: 20px;">Aún no hay opiniones para este restaurante.</p>';
             }
@@ -1329,7 +1507,7 @@
         function logout() {
             currentUser = null;
             favorites = [];
-            
+
             // Limpiar localStorage si está disponible
             if (typeof localStorage !== 'undefined') {
                 localStorage.removeItem('currentUser');
@@ -1380,4 +1558,5 @@
         };
     </script>
 </body>
+
 </html>
